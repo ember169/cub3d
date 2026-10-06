@@ -23,7 +23,7 @@ $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(MLX):
-	$(MAKE) -C $(MLXPATH)
+	$(MAKE) -C $(MLXPATH) -f Makefile.mk INC=/usr/include CFLAGS="-O3 -std=gnu17 -I/usr/include"
 
 $(LIBFT):
 	$(MAKE) -C $(LIBPATH)
