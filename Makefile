@@ -9,7 +9,7 @@ LIBPATH		:= libs/libft
 LIBNAME		:= libft.a
 LIBFT		:= $(LIBPATH)/$(LIBNAME)
 
-INCLUDE		:= -I includes -I $(MLXPATH) -I $(LIBPATH)/includes
+INCLUDES	:= -I includes -I $(MLXPATH) -I $(LIBPATH)/includes
 LDFLAGS		:= -L $(MLXPATH) -lmlx -L $(LIBPATH) -lft -lXext -lX11 -lm -lz
 
 SRCS		:= src/mandatory/main.c
