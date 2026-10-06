@@ -15,6 +15,7 @@ LDFLAGS		:= -L $(MLXPATH) -lmlx -L $(LIBPATH) -lft -lXext -lX11 -lm -lz
 SRCS		:= src/mandatory/main.c
 OBJS		:= $(SRCS:.c=.o)
 
+all: $(NAME)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
