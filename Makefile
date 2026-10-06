@@ -36,7 +36,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBPATH) clean
+	$(MAKE) -C $(LIBPATH) fclean
 
 re: fclean all
 
