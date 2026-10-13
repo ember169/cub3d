@@ -1,4 +1,4 @@
-NAME		:= cub3d
+NAME		:= cub3D
 CC			:= cc 
 CFLAGS		:= -Wall -Wextra -Werror -g3 -std=gnu17
 
@@ -9,12 +9,13 @@ LIBPATH		:= libs/libft
 LIBNAME		:= libft.a
 LIBFT		:= $(LIBPATH)/$(LIBNAME)
 
-INCLUDE		:= -I includes -I $(MLXPATH) -I $(LIBPATH)/includes
+INCLUDES	:= -I includes -I $(MLXPATH) -I $(LIBPATH)/includes
 LDFLAGS		:= -L $(MLXPATH) -lmlx -L $(LIBPATH) -lft -lXext -lX11 -lm -lz
 
 SRCS		:= src/mandatory/main.c
 OBJS		:= $(SRCS:.c=.o)
 
+all: $(NAME)
 
 $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $@
@@ -23,7 +24,7 @@ $(NAME): $(OBJS) $(MLX) $(LIBFT)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(MLX):
-	$(MAKE) -C $(MLXPATH)
+	$(MAKE) -C $(MLXPATH) -f Makefile.mk INC=/usr/include CFLAGS="-O3 -std=gnu17 -I/usr/include"
 
 $(LIBFT):
 	$(MAKE) -C $(LIBPATH)
@@ -35,7 +36,7 @@ clean:
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBPATH) clean
+	$(MAKE) -C $(LIBPATH) fclean
 
 re: fclean all
 
