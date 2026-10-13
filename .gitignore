@@ -7,7 +7,6 @@ mlx/Makefile.gen
 mlx/test/Makefile.gen
 mlx/test/mlx-test
 mlx/test/*.o
-tests/unit/
 
 # Prerequisites
 *.d
