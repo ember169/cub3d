@@ -17,7 +17,8 @@ SRCS		:= src/mandatory/main.c \
 			   src/core/gfx/pixel.c \
 			   src/core/gfx/keys.c \
 			   src/mandatory/hooks.c \
-			   src/mandatory/loop.c
+			   src/mandatory/loop.c \
+			   src/core/render/raycast.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)
