@@ -14,7 +14,10 @@ LDFLAGS		:= -L $(MLXPATH) -lmlx -L $(LIBPATH) -lft -lXext -lX11 -lm -lz
 
 SRCS		:= src/mandatory/main.c \
 			   src/core/gfx/gfx_init.c \
-			   src/core/gfx/pixel.c
+			   src/core/gfx/pixel.c \
+			   src/core/gfx/keys.c \
+			   src/mandatory/hooks.c \
+			   src/mandatory/loop.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)
