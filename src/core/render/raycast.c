@@ -37,8 +37,30 @@ static void	init_step(t_ray *r, t_vec pos)
 	}
 }
 
+/* Le plus petit side = la prochaine ligne franchie ; on visite donc
+** chaque case traversee, sans jamais sauter un coin de mur */
+void	run_dda(t_game *g, t_ray *r)
+{
+	r->hit_side = 0;
+	while (!is_solid(g, r->map_x, r->map_y))
+	{
+		if (r->side.x < r->side.y)
+		{
+			r->side.x += r->delta.x;
+			r->map_x += r->step_x;
+			r->hit_side = 0;
+		}
+		else
+		{
+			r->side.y += r->delta.y;
+			r->map_y += r->step_y;
+			r->hit_side = 1;
+		}
+	}
+}
+
 /* camera_x en double : 2 * x / WIN_W en int vaudrait toujours 0.
-** A completer : run_dda (R2) puis perp (R3) */
+** A completer : perp (R3) */
 void	cast_ray(t_game *g, int x, t_ray *r)
 {
 	double	camera_x;
@@ -57,4 +79,5 @@ void	cast_ray(t_game *g, int x, t_ray *r)
 	else
 		r->delta.y = fabs(1 / r->dir.y);
 	init_step(r, g->pl.pos);
+	run_dda(g, r);
 }
