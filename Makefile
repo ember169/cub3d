@@ -12,7 +12,9 @@ LIBFT		:= $(LIBPATH)/$(LIBNAME)
 INCLUDES	:= -I includes -I $(MLXPATH) -I $(LIBPATH)/includes
 LDFLAGS		:= -L $(MLXPATH) -lmlx -L $(LIBPATH) -lft -lXext -lX11 -lm -lz
 
-SRCS		:= src/mandatory/main.c
+SRCS		:= src/mandatory/main.c \
+			   src/core/gfx/gfx_init.c \
+			   src/core/gfx/pixel.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)
