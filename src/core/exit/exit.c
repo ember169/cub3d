@@ -10,3 +10,44 @@
  * - [ ] `zbuf`, `ext`, `ext_free` restent `NULL` en mandatory : ce sont les seuls crochets pour les bonus.
 **/
 
+void	exit_game(t_game *g, int status, char *msg);
+{
+	if (msg)
+	{
+		ft_putstr_fd("Error\n", 2);
+		ft_putstr_fd(msg, 2);
+		ft_putchar_fd('\n', 2);
+	}
+	if (g->ext_free)
+		g->ext_free(g);
+	free_tab(g->map.grid);
+	g->map.grid = NULL;
+	destroy_gfx(g);
+	exit(status);
+}
+
+void	free_tab(char **tab)
+{
+	return ;
+}
+
+void	destroy_gfx(t_game *g);
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (g->tex[i].ptr)
+			mlx_destroy_image(g->mlx, g->frame.ptr);
+		if (g->frame.ptr)
+			mlx_destroy_image(g->mlx, g->frame.ptr);
+		if (g->win)
+			mlx_destroy_window(g->mlx, g->win);
+		if (g->mlx)
+		{
+			mlx_destroy_display(g->mlx);
+			free(g->mlx);
+		}
+	}
+}
