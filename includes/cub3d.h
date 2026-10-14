@@ -154,6 +154,7 @@ typedef struct s_game
 /* E - sortie et memoire */
 void	exit_game(t_game *g, int status, char *msg);
 void	free_tab(char **tab);
+void	free_scene(t_scene *sc);
 void	destroy_gfx(t_game *g);
 
 /* P - parsing : un char * renvoye = message E_* (NULL = OK), jamais alloue */
