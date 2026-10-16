@@ -16,7 +16,8 @@ SRCS		:= src/mandatory/main.c \
 			src/core/exit/exit.c \
 			src/core/exit/free.c \
 			src/core/parsing/parse_scene.c \
-			src/core/parsing/file.c
+			src/core/parsing/file.c \
+			src/core/parsing/read_line.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)
