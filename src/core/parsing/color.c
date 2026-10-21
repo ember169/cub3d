@@ -7,25 +7,57 @@
 **   espaces* chiffres+ espaces* ',' espaces* chiffres+ espaces* ','
 **   espaces* chiffres+ espaces* fin
 **
-** static int read_component(char *s, int *i, int *val)
-**     sauter les espaces
-**     val = 0 ; nb = 0
-**     tant que s[*i] est un chiffre :
-**         val = val * 10 + (s[*i] - '0') ; nb++ ; (*i)++
-**         si val > 255 -> renvoyer 1        (pendant la lecture : pas d'overflow)
-**     si nb == 0 -> renvoyer 1
-**     sauter les espaces
-**     renvoyer 0
-**
-** int parse_rgb(char *s, int *out)           0 = OK, 1 = erreur
-**     i = 0 ; k = 0 ; rgb = 0
-**     tant que k < 3 :
-**         si read_component(s, &i, &val) -> renvoyer 1
-**         rgb = (rgb << 8) | val
-**         si k < 2 : si s[i] != ',' -> renvoyer 1 ; i++
-**         k++
-**     si s[i] != '\0' -> renvoyer 1          (rien apres le 3e nombre)
-**     *out = rgb ; renvoyer 0
-**
 ** Pas de ft_atoi (accepte '+', '-', deborde) ni de ft_split (fusionne les ',').
 */
+
+/* Lit "espaces nombre espaces" ; refuse > 255 PENDANT la lecture */
+static int	read_component(char *s, int *i, int *val)
+{
+	int	nb;
+
+	while (s[*i] == ' ')
+		(*i)++;
+	*val = 0;
+	nb = 0;
+	while (ft_isdigit(s[*i]))
+	{
+		*val = *val * 10 + (s[*i] - '0');
+		nb++;
+		(*i)++;
+		if (*val > 255)
+			return (1);
+	}
+	if (nb == 0)
+		return (1);
+	while (s[*i] == ' ')
+		(*i)++;
+	return (0);
+}
+
+/* 0 = OK (*out = 0x00RRGGBB), 1 = erreur */
+int	parse_rgb(char *s, int *out)
+{
+	int	i;
+	int	k;
+	int	val;
+	int	rgb;
+
+	i = 0;
+	k = 0;
+	rgb = 0;
+	while (k < 3)
+	{
+		if (read_component(s, &i, &val))
+			return (1);
+		rgb = (rgb << 8) | val;
+		if (k < 2 && s[i] != ',')
+			return (1);
+		if (k < 2)
+			i++;
+		k++;
+	}
+	if (s[i] != '\0')
+		return (1);
+	*out = rgb;
+	return (0);
+}

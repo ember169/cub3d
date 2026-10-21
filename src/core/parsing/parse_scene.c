@@ -1,5 +1,62 @@
 #include "cub3d.h"
 
+static int	all_blank(char **lines)
+{
+	int	i;
+
+	i = 0;
+	while (lines && lines[i])
+	{
+		if (!is_blank(lines[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+/*
+** P2 - Zone elements. S'arrete DES que les 6 sont vus : la ligne non blanche
+** suivante est forcement la map. Renvoie l'indice de la ligne qui suit le
+** 6e element.
+*/
+static int	parse_elements(t_game *g)
+{
+	int		i;
+	char	*msg;
+
+	i = 0;
+	while (g->sc.lines[i] && g->sc.found != ALL_ELEMS)
+	{
+		if (!is_blank(g->sc.lines[i]))
+		{
+			msg = parse_element(g, g->sc.lines[i]);
+			if (msg)
+				exit_game(g, 1, msg);
+		}
+		i++;
+	}
+	if (g->sc.found != ALL_ELEMS)
+		exit_game(g, 1, E_MISSING);
+	return (i);
+}
+
+/* P5 -> P8 : chaque etape ne tourne que si la precedente a reussi */
+static void	parse_map(t_game *g, int i)
+{
+	char	*msg;
+	int		row;
+	int		col;
+
+	msg = build_map(g, g->sc.lines + i);
+	if (!msg)
+		msg = check_chars(&g->map);
+	if (!msg && check_map(&g->map, &row, &col))
+		msg = E_OPENMAP;
+	if (msg)
+		exit_game(g, 1, msg);
+	init_player(g);
+}
+
 void	parse_scene(t_game *g, char *path)
 {
 	int	err;
@@ -15,23 +72,9 @@ void	parse_scene(t_game *g, char *path)
 	g->sc.lines = read_lines(path, &err);
 	if (err)
 		exit_game(g, 1, E_MALLOC);
-	if (!g->sc.lines)
+	if (all_blank(g->sc.lines))
 		exit_game(g, 1, E_EMPTY);
-
-	/*
-	** P2 - zone elements
-	**     i = 0
-	**     tant que lines[i] ET found != ALL_ELEMS :
-	**         si !is_blank(lines[i]) : msg = parse_element(g, lines[i])
-	**                                  si msg -> exit_game(g, 1, msg)
-	**         i++
-	**     si found != ALL_ELEMS -> exit_game(g, 1, E_MISSING)
-	**
-	** P5 - msg = build_map(g, lines + i)            si msg -> exit_game
-	** P6 - msg = check_chars(&g->map)               si msg -> exit_game
-	** P7 - si check_map(&g->map, &row, &col)        -> exit_game(E_OPENMAP)
-	** P8 - init_player(g)
-	**
-	** Fin : free_tab(g->sc.lines) ; g->sc.lines = NULL
-	*/
+	parse_map(g, parse_elements(g));
+	free_tab(g->sc.lines);
+	g->sc.lines = NULL;
 }

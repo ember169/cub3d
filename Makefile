@@ -13,11 +13,18 @@ INCLUDES	:= -I includes -I $(MLXPATH) -I $(LIBPATH)/includes
 LDFLAGS		:= -L $(MLXPATH) -lmlx -L $(LIBPATH) -lft -lXext -lX11 -lm -lz
 
 SRCS		:= src/mandatory/main.c \
+			src/mandatory/rules.c \
 			src/core/exit/exit.c \
 			src/core/exit/free.c \
 			src/core/parsing/parse_scene.c \
 			src/core/parsing/file.c \
-			src/core/parsing/read_line.c
+			src/core/parsing/read_line.c \
+			src/core/parsing/elements.c \
+			src/core/parsing/texture_path.c \
+			src/core/parsing/color.c \
+			src/core/parsing/map_build.c \
+			src/core/parsing/map_check.c \
+			src/core/parsing/player.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)

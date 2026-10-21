@@ -26,38 +26,48 @@ static int	tab_push(char ***tab, char *line)
 	return (0);
 }
 
-/* 
+/*
+	Lit jusqu'a NULL meme apres une erreur : le stash statique de gnl est
+	ainsi toujours vide en sortie (pas de "still reachable").
+*/
+static void	push_all_lines(int fd, char ***tab, int *err)
+{
+	char	*line;
+	size_t	len;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		len = ft_strlen(line);
+		if (len && line[len - 1] == '\n')
+			line[len - 1] = '\0';
+		if (*err || tab_push(tab, line))
+		{
+			*err = 1;
+			free(line);
+		}
+		line = get_next_line(fd);
+	}
+}
+
+/*
 	lit TOUT le fichier dans g->sc.lines
 	(tableau de chaînes, sans '\n', lignes vides conservées)
 */
 char	**read_lines(char *path, int *err)
 {
 	char	**tab;
-	char	*line;
-	size_t	len;
 	int		fd;
 
 	tab = NULL;
 	fd = open(path, O_RDONLY);
 	if (fd < 0)
-		*err = 1;
-	line = NULL;
-	while (fd >= 0)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		len = ft_strlen(line);
-		if (len && line[len - 1] == '\n')
-			line[len - 1] = '\0';
-		if (*err || tab_push(&tab, line))
-		{
-			*err = 1;
-			free(line);
-		}
+		*err = 1;
+		return (NULL);
 	}
-	if (fd >= 0)
-		close(fd);
+	push_all_lines(fd, &tab, err);
+	close(fd);
 	if (*err)
 	{
 		free_tab(tab);

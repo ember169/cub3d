@@ -3,9 +3,21 @@
 /*
 ** Points de variation mandatory (le bonus fournit rules_bonus.c, memes
 ** prototypes : map_check.c n'est jamais modifie).
-**
-** int is_map_char(char c)    renvoyer c est '0' '1' 'N' 'S' 'E' 'W' ou ' '
-** int is_walkable(char c)    renvoyer c est '0' 'N' 'S' 'E' ou 'W'
+*/
+
+/* c != '\0' : ft_strchr trouverait le terminateur de la chaine */
+int	is_map_char(char c)
+{
+	return (c != '\0' && ft_strchr("01NSEW ", c) != NULL);
+}
+
+int	is_walkable(char c)
+{
+	return (c != '\0' && ft_strchr("0NSEW", c) != NULL);
+}
+
+/*
+** A FAIRE (M2 / R5) :
 ** int is_solid(t_game *g, int x, int y)
 **     renvoyer grid[y][x] == '1' (hors grille = solide)
 ** t_img *select_texture(t_game *g, t_ray *r)
