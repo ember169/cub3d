@@ -36,3 +36,24 @@
 **     g->sc.found |= 1 << el
 **     renvoyer NULL
 */
+
+char	*parse_element(t_game *g, char *line)
+{
+	int			i;
+	int			len;
+	static int	el;
+
+	if ((ft_strchr("\t", line) != NULL) || (ft_strchr("\r", line) != NULL))
+		return (E_BADSPACE);
+	i = 0;
+	while (line[i] == ' ')
+		i++;
+	len = 0;
+	while (line[i + len] != ' ' && line[i + len])
+		len++;
+	el = elem_id(line + i, len);
+	if (el == -1)
+	{
+
+	}
+}
