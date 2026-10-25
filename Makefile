@@ -19,6 +19,8 @@ SRCS		:= src/mandatory/main.c \
 			   src/mandatory/hooks.c \
 			   src/mandatory/loop.c \
 			   src/core/render/raycast.c \
+			   src/core/render/column.c \
+			   src/core/render/frame.c \
 			   src/mandatory/rules.c
 OBJS		:= $(SRCS:.c=.o)
 
