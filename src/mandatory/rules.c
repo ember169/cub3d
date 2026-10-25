@@ -16,11 +16,24 @@ int	is_walkable(char c)
 	return (c != '\0' && ft_strchr("0NSEW", c) != NULL);
 }
 
-/*
-** A FAIRE (M2 / R5) :
-** int is_solid(t_game *g, int x, int y)
-**     renvoyer grid[y][x] == '1' (hors grille = solide)
-** t_img *select_texture(t_game *g, t_ray *r)
-**     selon la face touchee (hit_side) et le signe de r->dir :
-**     renvoyer &g->tex[EL_NO | EL_SO | EL_WE | EL_EA]
-*/
+/* Hors grille et espace comptent comme des murs : le DDA s'arrete toujours */
+int	is_solid(t_game *g, int x, int y)
+{
+	if (x < 0 || y < 0 || x >= g->map.w || y >= g->map.h)
+		return (1);
+	return (g->map.grid[y][x] == '1' || g->map.grid[y][x] == ' ');
+}
+
+/* Convention 7.8 : NO = texture vue en regardant vers le Nord (y < 0) */
+t_img	*select_texture(t_game *g, t_ray *r)
+{
+	if (r->hit_side == 1)
+	{
+		if (r->dir.y < 0)
+			return (&g->tex[EL_NO]);
+		return (&g->tex[EL_SO]);
+	}
+	if (r->dir.x > 0)
+		return (&g->tex[EL_EA]);
+	return (&g->tex[EL_WE]);
+}

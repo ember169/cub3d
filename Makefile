@@ -24,7 +24,15 @@ SRCS		:= src/mandatory/main.c \
 			src/core/parsing/color.c \
 			src/core/parsing/map_build.c \
 			src/core/parsing/map_check.c \
-			src/core/parsing/player.c
+			src/core/parsing/player.c \
+			src/core/gfx/gfx_init.c \
+			src/core/gfx/pixel.c \
+			src/core/gfx/keys.c \
+			src/mandatory/hooks.c \
+			src/mandatory/loop.c \
+			src/core/render/raycast.c \
+			src/core/render/column.c \
+			src/core/render/frame.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)
