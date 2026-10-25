@@ -25,16 +25,28 @@ static void	col_bounds(t_col *c, double perp)
 		c->end = WIN_H - 1;
 }
 
-/* A completer (R4) : plafond au-dessus de start, sol sous end, couleur
-** selon hit_side ; R5 remplacera la couleur unie par la texture */
+/* Une seule passe : chaque pixel est ecrit une fois (plafond, mur, sol).
+** Couleur unie selon hit_side pour voir le relief ; R5 met la texture */
 void	draw_column(t_game *g, t_ray *r, int x)
 {
 	t_col	c;
 	int		y;
+	int		color;
 
 	c.x = x;
 	col_bounds(&c, r->perp);
-	y = c.start;
-	while (y <= c.end)
-		put_pixel(&g->frame, x, y++, 0xFFFFFF);
+	y = 0;
+	while (y < WIN_H)
+	{
+		if (y < c.start)
+			color = g->sc.ceil;
+		else if (y > c.end)
+			color = g->sc.floor;
+		else if (r->hit_side == 0)
+			color = 0xC0C0C0;
+		else
+			color = 0x808080;
+		put_pixel(&g->frame, x, y, color);
+		y++;
+	}
 }
