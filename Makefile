@@ -32,7 +32,8 @@ SRCS		:= src/mandatory/main.c \
 			src/mandatory/loop.c \
 			src/core/render/raycast.c \
 			src/core/render/column.c \
-			src/core/render/frame.c
+			src/core/render/frame.c \
+			src/mandatory/temp_move.c
 OBJS		:= $(SRCS:.c=.o)
 
 all: $(NAME)
