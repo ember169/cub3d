@@ -25,8 +25,30 @@ static void	col_bounds(t_col *c, double perp)
 		c->end = WIN_H - 1;
 }
 
-/* Une seule passe : chaque pixel est ecrit une fois (plafond, mur, sol).
-** Couleur unie selon hit_side pour voir le relief ; R5 met la texture */
+/* wall_x = ou le rayon touche le mur, dans [0, 1). Retournement (7.9) pour
+** lire la texture de gauche a droite vu du joueur (inverse de lodev, car
+** ici y va vers le Sud). tex_pos != 0 quand le mur depasse l'ecran */
+static void	col_texture(t_game *g, t_ray *r, t_col *c)
+{
+	double	wall_x;
+
+	c->tex = select_texture(g, r);
+	if (r->hit_side == 0)
+		wall_x = g->pl.pos.y + r->perp * r->dir.y;
+	else
+		wall_x = g->pl.pos.x + r->perp * r->dir.x;
+	wall_x -= floor(wall_x);
+	c->tex_x = (int)(wall_x * c->tex->w);
+	if (c->tex_x >= c->tex->w)
+		c->tex_x = c->tex->w - 1;
+	if ((r->hit_side == 0 && r->dir.x < 0)
+		|| (r->hit_side == 1 && r->dir.y > 0))
+		c->tex_x = c->tex->w - 1 - c->tex_x;
+	c->step = (double)c->tex->h / c->line_h;
+	c->tex_pos = (c->start - WIN_H / 2 + c->line_h / 2) * c->step;
+}
+
+/* Une seule passe : chaque pixel est ecrit une fois (plafond, mur, sol) */
 void	draw_column(t_game *g, t_ray *r, int x)
 {
 	t_col	c;
@@ -35,6 +57,7 @@ void	draw_column(t_game *g, t_ray *r, int x)
 
 	c.x = x;
 	col_bounds(&c, r->perp);
+	col_texture(g, r, &c);
 	y = 0;
 	while (y < WIN_H)
 	{
@@ -42,10 +65,11 @@ void	draw_column(t_game *g, t_ray *r, int x)
 			color = g->sc.ceil;
 		else if (y > c.end)
 			color = g->sc.floor;
-		else if (r->hit_side == 0)
-			color = 0xC0C0C0;
 		else
-			color = 0x808080;
+		{
+			color = get_texel(c.tex, c.tex_x, (int)c.tex_pos);
+			c.tex_pos += c.step;
+		}
 		put_pixel(&g->frame, x, y, color);
 		y++;
 	}
