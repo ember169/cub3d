@@ -59,8 +59,19 @@ void	run_dda(t_game *g, t_ray *r)
 	}
 }
 
-/* camera_x en double : 2 * x / WIN_W en int vaudrait toujours 0.
-** A completer : perp (R3) */
+/* La boucle du DDA a ajoute un delta de trop : on le retire.
+** C'est la profondeur le long de dir (pas d'hypotenuse) : pas de fisheye */
+static void	set_perp(t_ray *r)
+{
+	if (r->hit_side == 0)
+		r->perp = r->side.x - r->delta.x;
+	else
+		r->perp = r->side.y - r->delta.y;
+	if (r->perp < MIN_PERP)
+		r->perp = MIN_PERP;
+}
+
+/* camera_x en double : 2 * x / WIN_W en int vaudrait toujours 0 */
 void	cast_ray(t_game *g, int x, t_ray *r)
 {
 	double	camera_x;
@@ -80,4 +91,5 @@ void	cast_ray(t_game *g, int x, t_ray *r)
 		r->delta.y = fabs(1 / r->dir.y);
 	init_step(r, g->pl.pos);
 	run_dda(g, r);
+	set_perp(r);
 }
