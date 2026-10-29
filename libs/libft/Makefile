@@ -12,7 +12,7 @@
 
 # Compile & flags
 CC 			:= cc
-CFLAGS		:= -g3 -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror
 CPPFLAGS	:= -I .
 
 # Commands
