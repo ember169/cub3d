@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/14 16:19:41 by lgervet           #+#    #+#             */
+/*   Updated: 2026/10/29 12:00:00 by lgervet          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 /* Verifie que le fichier termine en .cub */
@@ -18,6 +30,7 @@ int	check_extension(char *path, char *ext)
 		return (0);
 	return (ft_strncmp(base + len - ext_len, ext, ext_len) == 0);
 }
+
 /* Verifie que l'argument est un fichier lisible */
 int	check_readable_file(char *path)
 {
@@ -35,4 +48,3 @@ int	check_readable_file(char *path)
 	close(fd);
 	return (0);
 }
-
