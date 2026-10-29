@@ -28,8 +28,11 @@ expect_error() { # expect_error nom arg...
 	else res OK "$name"; fi
 	if [ "${VG:-0}" = 1 ]; then
 		timeout 60 "${VGCMD[@]}" "$BIN" "$@" >/dev/null 2>/tmp/cub_vg.log
-		if [ $? -eq 42 ]; then res KO "$name [valgrind]" "(voir /tmp/cub_vg.log)"
+		code=$?
+		if [ $code -eq 42 ]; then res KO "$name [valgrind]" "(voir /tmp/cub_vg.log)"
 			cp /tmp/cub_vg.log "/tmp/cub_vg_$(basename "$name").log"
+		elif [ $code -eq 126 ] || [ $code -eq 127 ]; then
+			res KO "$name [valgrind]" "(code $code : valgrind non executable)"
 		else res OK "$name [valgrind]"; fi
 	fi
 }
@@ -43,6 +46,9 @@ expect_running() { # la fenetre doit rester ouverte 2 s (timeout => code 124)
 
 [ -x "$BIN" ] || { echo "binaire $BIN introuvable (make ?)"; exit 2; }
 [ -d maps/valid ] || { echo "lancer d'abord : bash tests/gen_maps.sh"; exit 2; }
+if [ "${VG:-0}" = 1 ] && ! command -v valgrind >/dev/null; then
+	echo "VG=1 mais valgrind introuvable : installer valgrind"; exit 2
+fi
 [ "$(id -u)" = 0 ] && echo "attention : en root, les tests *noperm* ne sont pas fiables"
 
 echo "=== Arguments"

@@ -7,8 +7,10 @@ set -e
 V=maps/valid
 I=maps/invalid
 T=textures/test
-chmod -R u+rwx maps "$T" 2>/dev/null || true
-rm -rf maps "$T"
+chmod -R u+rwX "$V" "$I" "$T" 2>/dev/null || true
+# Ne vide que les dossiers generes : maps/demo et les .replace-me restent
+find "$V" "$I" -mindepth 1 ! -name .replace-me -delete 2>/dev/null || true
+rm -rf "$T"
 mkdir -p "$V" "$I" "$T"
 
 # ---------- textures de test : 64x64, barre a gauche + bloc en haut a gauche
