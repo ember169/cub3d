@@ -7,6 +7,9 @@ tags: [cub3d, parsing, cours]
 > [!abstract] Objectif de ce cours
 > À la fin, tu dois pouvoir **expliquer** chaque fonction du parser, **justifier** chaque choix devant un correcteur, et **retrouver** d'où vient n'importe quel message d'erreur sans regarder le code.
 
+> [!tip] La suite
+> Le reste du programme (MiniLibX, raycasting, boucle de jeu, build) est dans [cours-moteur](../cours-moteur/00%20-%20Index.md).
+
 ## Ordre de lecture
 
 1. [01 - Vue d'ensemble](01%20-%20Vue%20d'ensemble.md) : le pipeline, la convention de retour, pourquoi un seul `exit`
