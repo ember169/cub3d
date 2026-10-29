@@ -190,8 +190,7 @@ valgrind --leak-check=full --track-fds=yes ./cub3D maps/demo/demo.cub
 
 ### AI usage
 
-AI tools were used throughout the project; every AI-generated line was reviewed,
-tested and is understood by both members.
+AI tools were used throughout the project.
 
 - **Planning and learning**: the project roadmap (units, pseudo-code, pitfalls,
   milestones) was written with Claude and used as our course material on ray casting,
@@ -206,4 +205,12 @@ tested and is understood by both members.
   tested by hand and with the test suite.
 - **Debugging and checks**: Claude Code ran builds, tests, valgrind and norminette
   and explained the causes of the bugs found.
-- [À COMPLÉTER PAR A] (parser, exit, test scripts, `docs/`).
+- **Code and docs (lgervet)**: according to the git history, Claude Code co-wrote
+  the fix of `exit_game` and the first parsing step (file reading and scene loading:
+  `src/core/exit/`, `src/core/parsing/file.c`, `parse_scene.c`), the normalization of
+  all files to LF line endings (`.gitattributes`), and the engine course
+  `docs/cours-moteur/` used to prepare the defense. The rest of the parser
+  (`src/core/parsing/`: elements, colors, map building and checks, player) and the
+  parser course `docs/cours-parser/` were committed without an AI co-author.
+  This statement is based only on the co-author trailers recorded in the git history;
+  it does not say whether AI was used for the commits without such a trailer.
