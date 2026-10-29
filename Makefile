@@ -1,6 +1,6 @@
 NAME		:= cub3D
 CC			:= cc 
-CFLAGS		:= -Wall -Wextra -Werror -g3 -std=gnu17
+CFLAGS		:= -Wall -Wextra -Werror -std=gnu17
 
 MLXPATH		:= libs/mlx
 MLXNAME		:= libmlx.a
