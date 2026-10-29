@@ -1,0 +1,9 @@
+# Le parser refuse les \r (E_BADSPACE) : tout le repo reste en LF,
+# quel que soit core.autocrlf sur la machine qui commit
+* text=auto eol=lf
+*.cub text eol=lf
+*.xpm text eol=lf
+# XPM renomme en .png par gen_maps.sh (test d'extension) : c'est du texte
+textures/test/north.png text eol=lf
+# Ce test doit garder ses \r : on stocke les octets tels quels
+maps/invalid/i_choice_crlf.cub -text
