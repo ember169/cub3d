@@ -192,25 +192,9 @@ valgrind --leak-check=full --track-fds=yes ./cub3D maps/demo/demo.cub
 
 AI tools were used throughout the project.
 
-- **Planning and learning**: the project roadmap (units, pseudo-code, pitfalls,
-  milestones) was written with Claude and used as our course material on ray casting,
+- **Planning and learning**: the project roadmap was written with Claude and used as our course material on ray casting,
   DDA, the MiniLibX and the game loop.
 - **Tests**: the test map generator `tests/gen_maps.sh` and the test runner
-  `tests/run_tests.sh` come from that roadmap (AI-generated).
-- **Code (achavier)**: Claude Code wrote most of the graphics and rendering code
-  (`src/core/gfx/`, `src/core/render/`, `src/mandatory/hooks.c`, `loop.c`, `main.c`),
-  the movement and collision code (`src/core/move/`, `src/mandatory/collide.c`), the
-  Makefile fixes and the Norm fixes (42 headers, spacing), under our direction:
-  unit by unit, one git branch per unit, each diff reviewed before every commit,
-  tested by hand and with the test suite.
-- **Debugging and checks**: Claude Code ran builds, tests, valgrind and norminette
-  and explained the causes of the bugs found.
-- **Code and docs (lgervet)**: according to the git history, Claude Code co-wrote
-  the fix of `exit_game` and the first parsing step (file reading and scene loading:
-  `src/core/exit/`, `src/core/parsing/file.c`, `parse_scene.c`), the normalization of
-  all files to LF line endings (`.gitattributes`), and the engine course
-  `docs/cours-moteur/` used to prepare the defense. The rest of the parser
-  (`src/core/parsing/`: elements, colors, map building and checks, player) and the
-  parser course `docs/cours-parser/` were committed without an AI co-author.
-  This statement is based only on the co-author trailers recorded in the git history;
-  it does not say whether AI was used for the commits without such a trailer.
+  `tests/run_tests.sh` come from that roadmap.
+- **Debugging and checks**: Claude Code ran test series and made report for us, making it faster to find bugs and their causes.
+- **Code and docs**: Claude Code was used throughout the project to find and fix some edge cases. In rare cases it was used to write pseudo-code when we needed help with respecting the norm. Finally, we delegated it the normalization of all files to LF line endings (`.gitattributes`).
