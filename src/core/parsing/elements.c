@@ -19,7 +19,9 @@
 **   doublon : found & (1 << el)      tout present : found == ALL_ELEMS
 */
 
-/* Longueur ET contenu : "NOX" et "NO./a.xpm" ne sont pas "NO" */
+/*
+**	Verifie si word est un des 6 elements attendu en header de map.cub
+*/
 static int	elem_id(char *word, int len)
 {
 	if (len == 2 && !ft_strncmp(word, "NO", 2))
@@ -37,7 +39,9 @@ static int	elem_id(char *word, int len)
 	return (-1);
 }
 
-/* Delegue la valeur : P3 pour une texture, P4 pour une couleur */
+/* 
+** Delegue la valeur : P3 pour une texture, P4 pour une couleur
+*/
 static char	*parse_value(t_game *g, int el, char *rest)
 {
 	int	color;
@@ -53,6 +57,11 @@ static char	*parse_value(t_game *g, int el, char *rest)
 	return (NULL);
 }
 
+/*
+** Verifie la presence des 6 elements du header .cub
+** Utilise bitmask `found` pour verifier duplicates/missings
+** Si tout y est: found = 111111 = 63 (valeur de la const ALL_ELEMS)
+*/
 char	*parse_element(t_game *g, char *line)
 {
 	int		i;

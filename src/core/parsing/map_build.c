@@ -12,13 +12,11 @@
 
 #include "cub3d.h"
 
-/*
-** P5 - Extraction de la map en grille rectangulaire h x w
-**
-** Pourquoi completer par des espaces : grid[y][x] devient lisible pour tout
-** 0 <= x < w, 0 <= y < h ; "au-dela de la ligne" = du vide = un espace.
+/* 
+** Compte la largeur de la map:
+** - h (height) = le nombre de ligne de la map
+** - w (width) = le nombre de colonnes de la map
 */
-
 static int	map_width(char **lines, int h)
 {
 	int	w;
@@ -37,7 +35,14 @@ static int	map_width(char **lines, int h)
 	return (w);
 }
 
-/* grid rattachee a g AVANT d'etre remplie : exit_game libere le partiel */
+/* 
+** Rempli la map.grid en loop: 
+** 1. alloue une ligne entiere
+** 2. set une ligne d'espace vide
+** 3. copie le contenu de la ligne active dans map.grid
+** 4. termine par espace nul
+** note: grid rattachee a g AVANT d'etre remplie pour exit_game
+*/
 static char	*fill_grid(t_game *g, char **lines, int h, int w)
 {
 	int	y;
@@ -61,11 +66,12 @@ static char	*fill_grid(t_game *g, char **lines, int h, int w)
 	return (NULL);
 }
 
-/*
-** lines = premiere ligne apres le 6e element.
-** Lignes blanches avant la map : sautees. Apres la map : seules des lignes
-** blanches sont tolerees (une ligne vide DANS la map coupe donc la map en
-** deux, et la 2e moitie devient "du contenu apres la map" -> E_MAPGAP).
+/* Verifie que la map est pas constituee que de lignes blanches ni "coupee":
+** - lines = premiere ligne apres le 6e element.
+** - Lignes blanches avant la map : sautees.
+** - Apres la map : seules des lignes blanches sont tolerees 
+**	(une ligne vide DANS la map coupe donc la map en ** deux, et la 2e moitie
+**	devient "du contenu apres la map" -> E_MAPGAP).
 */
 char	*build_map(t_game *g, char **lines)
 {

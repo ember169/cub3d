@@ -27,9 +27,9 @@ static int	all_blank(char **lines)
 }
 
 /*
-** P2 - Zone elements. S'arrete DES que les 6 sont vus : la ligne non blanche
-** suivante est forcement la map. Renvoie l'indice de la ligne qui suit le
-** 6e element.
+** Parsing des elements de la map. S'arrete des que les 6 sont vus : 
+** - renvoie l'indice de la ligne qui suit le 6e element
+** - la ligne non blanche suivante est forcement la map
 */
 static int	parse_elements(t_game *g)
 {
@@ -52,7 +52,9 @@ static int	parse_elements(t_game *g)
 	return (i);
 }
 
-/* P5 -> P8 : chaque etape ne tourne que si la precedente a reussi */
+/* Lance une serie de verifications de la map (lignes blanches, caracteres, 
+** murs) puis initialise le joueur
+*/
 static void	parse_map(t_game *g, int i)
 {
 	char	*msg;
@@ -69,6 +71,11 @@ static void	parse_map(t_game *g, int i)
 	init_player(g);
 }
 
+/* 
+** Le pipeline entier se deroule d'ici:
+** 1. lecture du fichier .cub: check_extension, check_readable_file, read_lines
+** 2. verifie les elements du .cub et rempli la g.map: parse_map, parse_element
+*/
 void	parse_scene(t_game *g, char *path)
 {
 	int	err;

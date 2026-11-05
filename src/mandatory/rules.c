@@ -13,16 +13,16 @@
 #include "cub3d.h"
 
 /*
-** Points de variation mandatory (le bonus fournit rules_bonus.c, memes
-** prototypes : map_check.c n'est jamais modifie).
+** Verifie que le char est un char de la map
 */
-
-/* c != '\0' : ft_strchr trouverait le terminateur de la chaine */
 int	is_map_char(char c)
 {
 	return (c != '\0' && ft_strchr("01NSEW ", c) != NULL);
 }
 
+/*
+** Verifie que le char est un char DANS la map (!= mur)
+*/
 int	is_walkable(char c)
 {
 	return (c != '\0' && ft_strchr("0NSEW", c) != NULL);

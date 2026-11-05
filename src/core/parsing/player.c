@@ -13,12 +13,11 @@
 #include "cub3d.h"
 
 /*
-** P8 - Initialisation du joueur (ne peut pas echouer : P6 a garanti 1 joueur)
-**
-** Repere : x vers l'Est, y vers le SUD (donc Nord = y negatif).
-** plane = dir tourne de 90 degres vers la droite, mis a l'echelle du FOV :
-**   N dir (0,-1) plane (0.66,0)    S dir (0,1)  plane (-0.66,0)
-**   E dir (1,0)  plane (0,0.66)    W dir (-1,0) plane (0,-0.66)
+** Initialisation du cone de vision:
+**	- dir: sens du regard
+**	- plane: perpendiculaire a dir, represente la width de la fenetre
+**	- FOV: determine l'angle du cone de vision. 0.66 car c'est a peu pres le 
+**	champs humain: (FOV = 2 * atan(plane / dir) = 2 * atan(0.66) ≈ 66.8°)
 */
 static void	set_dir(t_player *p, char c)
 {
@@ -36,7 +35,11 @@ static void	set_dir(t_player *p, char c)
 	p->plane.y = p->dir.x * FOV_PLANE;
 }
 
-/* pos = centre de la case ; la lettre devient '0' (case vide pour le rendu) */
+/* 
+** - Identifie la position du joueur (+0.5 pour centrer sur la case)
+** - Initialise la direction du regard. 
+** - La case devient 0 (walkable) pour le rendu
+*/
 void	init_player(t_game *g)
 {
 	int		x;
