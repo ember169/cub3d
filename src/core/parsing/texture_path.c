@@ -6,18 +6,15 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/16 14:52:09 by lgervet           #+#    #+#             */
-/*   Updated: 2026/10/23 11:33:47 by lgervet          ###   ########.fr       */
+/*   Updated: 2026/11/13 15:14:48 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /*
-** P3 - Chemins de textures (validation seulement, pas de MLX ici)
-** Le chargement reel (mlx_xpm_file_to_image) se fait en G3 : E_TEXLOAD.
-**
-** Un seul point de sortie : tok est libere sur TOUS les chemins.
-** !tok[0] || tok[1] = "pas exactement un mot" (0 mot ou au moins 2).
+** Valide et store les chemins des textures
+** !tok[0] || tok[1] = il n'y a pas EXACTEMENT un seul token (0 ou > 1).
 */
 char	*parse_texture(t_game *g, int el, char *rest)
 {

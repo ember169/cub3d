@@ -6,7 +6,7 @@
 /*   By: lgervet <42@leogervet.com>                 +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/16 09:32:14 by lgervet           #+#    #+#             */
-/*   Updated: 2026/10/28 15:07:41 by lgervet          ###   ########.fr       */
+/*   Updated: 2026/11/13 15:14:53 by lgervet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	elem_id(char *word, int len)
 }
 
 /* 
-** Delegue la valeur : P3 pour une texture, P4 pour une couleur
+** Identifie la valeur: texture ou couleur
 */
 static char	*parse_value(t_game *g, int el, char *rest)
 {
